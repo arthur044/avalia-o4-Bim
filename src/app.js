@@ -1,18 +1,14 @@
-import express from 'express';
-import cors from 'cors';
-import 'dotenv/config.js';
-import rotas from './routes.js';
-// import './repository/connection.js';
+import "dotenv/config.js";
+import express from "express";
+import cors from "cors";
+import adicionarRotas from "./routes.js";
 
-const app = express();
-const port = process.env.PORT || 3000;
-app.use(express.json());
-rotas(app);
-app.use(cors());
+const servidor = express();
+servidor.use(cors());
+servidor.use(express.json());
 
-app.post('/upload', upload.single('file'), (req, res) => {
-    res.send(req.file);
-});
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-});
+adicionarRotas(servidor);
+
+servidor.listen(process.env.PORTA, () =>
+  console.log(`API subiu na porta ${process.env.PORTA}`)
+);
